@@ -33,6 +33,9 @@ def apply_in_any_order(person, scores):
         person.abilities[ability] = scores[0]
         del scores[0]
 
+    def meets_requirements(person, choice, ability):
+        return (choice in (ability.lower(), ability[:3]) and person.abilities[ability] is None)
+
     while scores:
         clear_screen()
         print('Your unallocated scores are: %s\n'
@@ -40,36 +43,25 @@ def apply_in_any_order(person, scores):
 
         person.output_abilities()
 
-        # make the input lowercase just to make comparison easier
-        ability = (input(
+        choice = (input(
             '\nChoose which ability you would like to assign %d to.\n' %
             scores[0]).strip()).lower()
 
-        # Check input against possible abilities. Make sure we don't override any abilities that
-        # have just been set.
-        if (ability in (COM.lower(), 'com', '1') and
-                person.abilities[COM] is None):
+        if meets_requirements(person, choice, COM):
             apply_score(person, COM, scores)
-        elif (ability in (CON.lower(), 'con', '2') and
-              person.abilities[CON] is None):
+        elif meets_requirements(person, choice, CON):
             apply_score(person, CON, scores)
-        elif (ability in (CUN.lower(), 'cun', '3') and
-              person.abilities[CUN] is None):
+        elif meets_requirements(person, choice, CUN):
             apply_score(person, CUN, scores)
-        elif (ability in (DEX.lower(), 'dex', '4') and
-              person.abilities[DEX] is None):
+        elif meets_requirements(person, choice, DEX):
             apply_score(person, DEX, scores)
-        elif (ability in (MAG.lower(), 'mag', '5') and
-              person.abilities[MAG] is None):
+        elif meets_requirements(person, choice, MAG):
             apply_score(person, MAG, scores)
-        elif (ability in (PER.lower(), 'per', '6') and
-              person.abilities[PER] is None):
+        elif meets_requirements(person, choice, PER):
             apply_score(person, PER, scores)
-        elif (ability in (STR.lower(), 'str', '7') and
-              person.abilities[STR] is None):
+        elif meets_requirements(person, choice, STR):
             apply_score(person, STR, scores)
-        elif (ability in (WIL.lower(), 'wil', 'will', '8') and
-              person.abilities[WIL] is None):
+        elif meets_requirements(person, choice, WIL):
             apply_score(person, WIL, scores)
 
 
@@ -95,7 +87,6 @@ def parse_raw_scores(raw_scores):
             scores.append(3)
         elif score == 18:
             scores.append(4)
-    print(scores)
     return scores
 
 
@@ -104,6 +95,9 @@ def buy_abilities(person):
     def increment_score(person, ability, advancement_points):
         person.abilities[ability] += 1
         return advancement_points - 1
+
+    def meets_requirements(person, choice, ability):
+        return (choice in (ability.lower(), ability[:3]) and person.abilities[ability] < 3)
 
     advancement_points = 10
 
@@ -117,25 +111,22 @@ def buy_abilities(person):
 
         person.output_abilities()
 
-        # make the input lowercase just to make comparison easier
         print('\nYou have [%s] points to spend.' % advancement_points)
-        ability = (input('\nChoose which ability you would like to increment: '))
+        choice = (input('\nChoose which ability you would like to increment: '))
 
-        # Check input against possible abilities. Make sure we don't override any abilities that
-        # have just been set.
-        if (ability in (COM.lower(), 'com', '1') and person.abilities[COM] < 3):
+        if meets_requirements(person, choice, COM):
             advancement_points = increment_score(person, COM, advancement_points)
-        elif (ability in (CON.lower(), 'con', '2') and person.abilities[CON] < 3):
+        elif meets_requirements(person, choice, CON):
             advancement_points = increment_score(person, CON, advancement_points)
-        elif (ability in (CUN.lower(), 'cun', '3') and person.abilities[CUN] < 3):
+        elif meets_requirements(person, choice, CUN):
             advancement_points = increment_score(person, CUN, advancement_points)
-        elif (ability in (DEX.lower(), 'dex', '4')and person.abilities[DEX] < 3):
+        elif meets_requirements(person, choice, DEX):
             advancement_points = increment_score(person, DEX, advancement_points)
-        elif (ability in (MAG.lower(), 'mag', '5')and person.abilities[MAG] < 3):
+        elif meets_requirements(person, choice, MAG):
             advancement_points = increment_score(person, MAG, advancement_points)
-        elif (ability in (PER.lower(), 'per', '6')and person.abilities[PER] < 3):
+        elif meets_requirements(person, choice, PER):
             advancement_points = increment_score(person, PER, advancement_points)
-        elif (ability in (STR.lower(), 'str', '7')and person.abilities[STR] < 3):
+        elif meets_requirements(person, choice, STR):
             advancement_points = increment_score(person, STR, advancement_points)
-        elif (ability in (WIL.lower(), 'wil', 'will', '8')and person.abilities[WIL] < 3):
+        elif meets_requirements(person, choice, WIL):
             advancement_points = increment_score(person, WIL, advancement_points)

@@ -7,6 +7,7 @@ class Character(object):
                           'Dexterity': None, 'Magic': None, 'Perception': None, 'Strength': None,
                           'Willpower': None}
 
+
     def output_abilities(self):
         for ability, score in self.abilities.items():
             if score is not None:

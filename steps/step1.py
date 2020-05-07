@@ -15,10 +15,57 @@ def get_ability_score_generation_type():
 def ability_score_generation(generation_type, person):
     if generation_type == 1:
         apply_in_order(person, parse_raw_scores(generate_raw_scores()))
+    if generation_type == 2:
+        apply_in_any_order(person, parse_raw_scores(generate_raw_scores()))
 
 def apply_in_order(person, scores):
     abilities = [COM, CON, CUN, DEX, MAG, PER, STR, WIL]
     person.abilities = dict(zip(abilities, scores))
+
+def apply_in_any_order(person, scores):
+
+    def apply_score(person, ability, score):
+        person.abilities[ability] = scores[0]
+        del scores[0]
+
+    while scores:
+        clear_screen()
+        print('Your unallocated scores are: %s\n'
+              'Your Ability Scores are:' % scores)
+
+        person.output_abilities()
+
+        # make the input lowercase just to make comparison easier
+        ability = (input(
+            '\nChoose which ability you would like to assign %d to.\n' %
+            scores[0]).strip()).lower()
+
+        # Check input against possible abilities. Make sure we don't override any abilities that
+        # have just been set.
+        if (ability in (COM.lower(), 'com', '1') and
+                person.abilities[COM] is None):
+            apply_score(person, COM, scores)
+        elif (ability in (CON.lower(), 'con', '2') and
+              person.abilities[CON] is None):
+            apply_score(person, CON, scores)
+        elif (ability in (CUN.lower(), 'cun', '3') and
+              person.abilities[CUN] is None):
+            apply_score(person, CUN, scores)
+        elif (ability in (DEX.lower(), 'dex', '4') and
+              person.abilities[DEX] is None):
+            apply_score(person, DEX, scores)
+        elif (ability in (MAG.lower(), 'mag', '5') and
+              person.abilities[MAG] is None):
+            apply_score(person, MAG, scores)
+        elif (ability in (PER.lower(), 'per', '6') and
+              person.abilities[PER] is None):
+            apply_score(person, PER, scores)
+        elif (ability in (STR.lower(), 'str', '7') and
+              person.abilities[STR] is None):
+            apply_score(person, STR, scores)
+        elif (ability in (WIL.lower(), 'wil', 'will', '8') and
+              person.abilities[WIL] is None):
+            apply_score(person, WIL, scores)
 
 def generate_raw_scores():
     scores = [roll(1, 6) + roll(1, 6) + roll(1, 6) for _ in range(8)]

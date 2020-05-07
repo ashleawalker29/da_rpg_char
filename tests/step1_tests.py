@@ -12,7 +12,7 @@ class Step1Tests(unittest.TestCase):
         self.assertEqual(self.person.abilities, self.empty_abilities)
 
 
-    def test_step1_generation_type1(self):
+    def test_generation_type1(self):
         raw_scores = step1.generate_raw_scores()
         self.assertEqual(len(raw_scores), 8)
         for raw_score in raw_scores:
@@ -28,7 +28,7 @@ class Step1Tests(unittest.TestCase):
         self.assertEqual(list(self.person.abilities.values()), parsed_scores)
 
 
-    def test_step1_generation_type2(self):
+    def test_generation_type2(self):
         """ Note: Requires user input right now. """
         raw_scores = step1.generate_raw_scores()
         self.assertEqual(len(raw_scores), 8)
@@ -49,7 +49,7 @@ class Step1Tests(unittest.TestCase):
                          sorted(step1.parse_raw_scores(raw_scores)))
 
 
-    def test_step1_generation_type3(self):
+    def test_generation_type3(self):
         """ Note: Requires user input right now. """
         step1.buy_abilities(self.person)
 

@@ -42,3 +42,16 @@ class Step1Tests(unittest.TestCase):
 
         for ability_score in self.person.abilities.values():
             self.assertTrue(ability_score is not None)
+
+        self.assertEqual(sorted(self.person.abilities.values()),
+                         sorted(step1.parse_raw_scores(raw_scores)))
+
+    def test_step1_generation_type3(self):
+        """ Note: Requires user input right now. """
+        step1.buy_abilities(self.person)
+
+        self.assertEqual(sum(self.person.abilities.values()), 10)
+
+        for ability_score in self.person.abilities.values():
+            self.assertTrue(ability_score is not None)
+            self.assertTrue(0 <= ability_score <= 3)

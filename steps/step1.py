@@ -1,6 +1,7 @@
 from api.dice_roll import roll
 from api.constants import TAB, COM, CON, CUN, DEX, MAG, PER, STR, WIL, clear_screen
 
+
 def get_ability_score_generation_type():
     while True:
         choice = int(input('There are three options of generating your ability scores.\n'

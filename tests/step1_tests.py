@@ -2,6 +2,7 @@ import unittest
 from api.character import Character
 from steps import step1
 
+
 class Step1Tests(unittest.TestCase):
     def setUp(self):
         self.person = Character()
@@ -10,7 +11,6 @@ class Step1Tests(unittest.TestCase):
             'Magic': None, 'Perception': None, 'Strength': None, 'Willpower': None}
 
         self.assertEqual(self.person.abilities, self.empty_abilities)
-
 
     def test_generation_type1(self):
         raw_scores = step1.generate_raw_scores()
@@ -26,7 +26,6 @@ class Step1Tests(unittest.TestCase):
         step1.apply_in_order(self.person, parsed_scores)
 
         self.assertEqual(list(self.person.abilities.values()), parsed_scores)
-
 
     def test_generation_type2(self):
         """ Note: Requires user input right now. """
@@ -47,7 +46,6 @@ class Step1Tests(unittest.TestCase):
 
         self.assertEqual(sorted(self.person.abilities.values()),
                          sorted(step1.parse_raw_scores(raw_scores)))
-
 
     def test_generation_type3(self):
         """ Note: Requires user input right now. """

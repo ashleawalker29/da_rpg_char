@@ -14,6 +14,7 @@ PER = 'Perception'
 STR = 'Strength'
 WIL = 'Willpower'
 
+
 def clear_screen():
     """ Clears the screen. """
     os.system('cls' if os.name == 'nt' else 'clear')
